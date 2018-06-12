@@ -1,0 +1,46 @@
+@()
+
+@main("HOCON Playground") {
+  <div class="content">
+    <div id="left">
+      <h2>HOCON</h2>
+      <div id="hocon" class="code" contenteditable>
+HOCON = Human-Optimized Config Object Notation
+
+"it's": "a JSON superset",
+
+features: [
+    less noisy / less pedantic syntax
+    ability to refer to another part of the configuration
+    import/include another configuration file into the current file
+    a mapping to a flat properties list such as Java's system properties
+    ability to get values from environment variables
+    # ability to write comments
+]
+
+specs url: "https://github.com/lightbend/config/blob/master/HOCON.md"
+
+it's: ${it's}. A ${HOCON}
+
+Try it out: conf is parsed online as you type
+      </div>
+      Resolve references like "${common-param}"<br>
+      <input type="checkbox" id="resolve" name="resolve" checked><b>resolve</b></input><br>
+      Render options:<br>
+      <input type="checkbox" id="json" name="json" checked>json</input><br>
+      <input type="checkbox" id="formatted" name="formatted" checked>formatted</input><br>
+      <input type="checkbox" id="comments" name="comments" checked>comments</input><br>
+      <input type="checkbox" id="originComments" name="originComments">originComments</input><br>
+    </div>
+    <div id="right">
+      <h2>Output</h2>
+      <div class="code">
+        <pre id="output"></pre>
+      </div>
+    </div>
+    <div class="clear">
+      <div class="footer">
+        Source: <a href="https://github.com/av-elier/hocon-playground">https://github.com/av-elier/hocon-playground.git</a>.
+      </div>
+  </div>
+}
