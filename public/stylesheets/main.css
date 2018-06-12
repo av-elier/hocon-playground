@@ -36,3 +36,11 @@ body {
     overflow: auto;
     width: 100%;
 }
+
+.clear {
+    clear : both;
+}
+
+.footer {
+    text-align : center;
+}
