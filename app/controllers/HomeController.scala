@@ -30,7 +30,13 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
           .setFormatted(formatted)
           .setComments(comments)
           .setOriginComments(originComments);
-        Ok(resolvedConf.root().render(renderConfig))
+        val rendered = resolvedConf.root().render(renderConfig)
+        val dbUrl = System.getenv("DATABASE_URL")
+        val secret = System.getenv("APPLICATION_SECRET")
+        if ((dbUrl != null && rendered.contains(dbUrl)) || (secret != null && rendered.contains(secret))) {
+          throw new Exception("you doing somethind nasty with APPLICATION_SECRET, right?")
+        }
+        Ok(rendered)
       }
       case Failure(err) => Ok(err.getMessage)
       case _ => Ok("internal error")
