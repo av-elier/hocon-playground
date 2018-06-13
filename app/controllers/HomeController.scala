@@ -20,7 +20,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     val formatted = request.queryString.getOrElse("formatted", Seq()).headOption.map(_.toBoolean).getOrElse(false);
     val comments = request.queryString.getOrElse("comments", Seq()).headOption.map(_.toBoolean).getOrElse(false);
     val originComments = request.queryString.getOrElse("originComments", Seq()).headOption.map(_.toBoolean).getOrElse(false);
-    val conf = Try(ConfigFactory.parseString(request.body))
+    val parseOptions = ConfigParseOptions.defaults().setIncluder(new ProhibitIncluder());
+    val conf = Try(ConfigFactory.parseString(request.body, parseOptions))
     conf match {
       case Success(conf) => {
         val resolvedConf = if (resolve) conf.resolve() else conf
