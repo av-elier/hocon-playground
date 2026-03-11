@@ -5,3 +5,4 @@ target
 /RUNNING_PID
 /.bloop
 /project
+build.log
