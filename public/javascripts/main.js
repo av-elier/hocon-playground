@@ -6,6 +6,7 @@ let inputJson = window.document.querySelector('#json');
 let inputFormatted = window.document.querySelector('#formatted');
 let inputComments = window.document.querySelector('#comments');
 let inputOriginComments = window.document.querySelector('#originComments');
+let inputReverse = window.document.querySelector('#reverse');
 
 
 inputResolve.addEventListener('input', updateOutput)
@@ -13,6 +14,7 @@ inputJson.addEventListener('input', updateOutput)
 inputFormatted.addEventListener('input', updateOutput)
 inputComments.addEventListener('input', updateOutput)
 inputOriginComments.addEventListener('input', updateOutput)
+inputReverse.addEventListener('input', updateOutput)
 hocon.addEventListener('keyup', updateOutput);
 
 function updateOutput() {
@@ -22,7 +24,8 @@ function updateOutput() {
         `&formatted=${inputFormatted.checked}` +
         `&comments=${inputComments.checked}` +
         `&originComments=${inputOriginComments.checked}`;
-    let r = fetch(`/hoconToJson?${query}`, {
+    const url = inputReverse.checked ? '/jsonToHocon' : '/hoconToJson';
+    let r = fetch(`${url}?${query}`, {
         method: 'POST',
         body: hocon.innerText,
     });
