@@ -7,6 +7,8 @@ let inputFormatted = window.document.querySelector('#formatted');
 let inputComments = window.document.querySelector('#comments');
 let inputOriginComments = window.document.querySelector('#originComments');
 
+const MAX_HOCON_LENGTH = 100 * 1024;
+
 
 function debounce(func, delay) {
     let timeoutId;
@@ -26,6 +28,11 @@ inputOriginComments.addEventListener('input', debouncedUpdateOutput)
 hocon.addEventListener('keyup', debouncedUpdateOutput);
 
 function updateOutput() {
+    const hoconText = hocon.innerText;
+    if (hoconText.length > MAX_HOCON_LENGTH) {
+        output.innerText = 'Input too large: maximum ' + MAX_HOCON_LENGTH + ' characters allowed.';
+        return;
+    }
     const query =
         `resolve=${inputResolve.checked}` +
         `&json=${inputJson.checked}` +
@@ -34,7 +41,7 @@ function updateOutput() {
         `&originComments=${inputOriginComments.checked}`;
     let r = fetch(`/hoconToJson?${query}`, {
         method: 'POST',
-        body: hocon.innerText,
+        body: hoconText,
     });
     r.then(x => {
         if (!x.ok) {
