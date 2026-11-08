@@ -6,3 +6,4 @@ target
 /.bloop
 /project
 build.log
+/findings/
