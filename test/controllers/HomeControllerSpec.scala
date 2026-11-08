@@ -9,7 +9,9 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
 
   "HomeController GET" should {
     "render the index page from the router" in {
-      val request = FakeRequest(GET, "/")
+      // FakeRequest defaults to Host "localhost", which the AllowedHostsFilter rejects;
+      // "localhost:9000" is in play.filters.hosts.allowed, so use it explicitly.
+      val request = FakeRequest(GET, "/").withHeaders("Host" -> "localhost:9000")
       val home = route(app, request).get
 
       status(home) mustBe OK

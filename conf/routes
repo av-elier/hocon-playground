@@ -5,6 +5,10 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
+# Rate limiting for this endpoint is enforced per-IP in HomeController.
+# nocsrf: Play 2.8 enables CSRFFilter by default, which 403s the browser's
+# tokenless text/plain POSTs; this endpoint is stateless (no session/cookies).
++ nocsrf
 POST    /hoconToJson                controllers.HomeController.hoconToJson
 
 # Map static resources from the /public folder to the /assets URL path
