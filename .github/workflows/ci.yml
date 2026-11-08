@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+    branches: [master] # default branch only; feature-branch pushes are covered by the PR event
   pull_request:
 
 jobs:
