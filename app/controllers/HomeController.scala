@@ -16,7 +16,9 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   val confResolverOptions = ConfigResolveOptions.noSystem()
 
-  def hoconToJson() = Action(parse.tolerantText) { implicit request =>
+  private val MaxHoconInputBytes = 100 * 1024L
+
+  def hoconToJson() = Action(parse.tolerantText(maxLength = MaxHoconInputBytes)) { implicit request =>
     val resolve = request.queryString.getOrElse("resolve", Seq()).headOption.map(_.toBoolean).getOrElse(false);
     val json = request.queryString.getOrElse("json", Seq()).headOption.map(_.toBoolean).getOrElse(false);
     val formatted = request.queryString.getOrElse("formatted", Seq()).headOption.map(_.toBoolean).getOrElse(false);
