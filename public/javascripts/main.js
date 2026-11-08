@@ -36,8 +36,15 @@ function updateOutput() {
         method: 'POST',
         body: hocon.innerText,
     });
-    r.then(x => x.text()).then(renderedJson => {
+    r.then(x => {
+        if (!x.ok) {
+            throw new Error('Server error: ' + x.status);
+        }
+        return x.text();
+    }).then(renderedJson => {
         output.innerText = renderedJson;
+    }).catch(err => {
+        output.innerText = 'Error: ' + err.message;
     });
 }
 
