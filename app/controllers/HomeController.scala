@@ -38,7 +38,10 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
         val rendered = resolvedConf.root().render(renderConfig)
         Ok(rendered)
       }
-      case Failure(err) => Ok(err.getMessage)
+      case Failure(err) => {
+        Logger(getClass).error("Failed to parse user-supplied HOCON input", err)
+        Ok("Invalid HOCON input")
+      }
       case _ => Ok("internal error")
     }
   }
